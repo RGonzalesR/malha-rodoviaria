@@ -44,3 +44,22 @@ def average_search_information(G):
                 S_total += 0
 
     return S_total / (n * n)
+
+def access_information(G):
+    """
+    Calcula o Access Information A(s)
+    """
+    nodes = list(G.nodes())
+    n = len(nodes)
+    access_info = {}
+
+    for s in nodes:
+        S_total = 0
+        for t in nodes:
+            try:
+                S_total += search_information(G, s, t)
+            except (nx.NetworkXNoPath, ZeroDivisionError):
+                S_total += 0
+        access_info[s] = S_total / n
+
+    return access_info
